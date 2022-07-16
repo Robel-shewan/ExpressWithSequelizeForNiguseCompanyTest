@@ -15,7 +15,7 @@ router
   .get(getAllProducts)
 
   .post(
-    check("title", "Title is required").notEmpty().isString(),
+    check("name", "nameis required").notEmpty().isString(),
     check("description", "description is required").notEmpty(),
     check("quantity_on_stock", "quantity_on_stock is required").notEmpty(),
     addProduct

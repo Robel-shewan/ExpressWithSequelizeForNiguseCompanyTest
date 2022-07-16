@@ -2,7 +2,8 @@
 
 const fs = require("fs");
 const path = require("path");
-const Sequelize = require("sequelize");
+const { Sequelize } = require("sequelize");
+
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || "development";
 const config = require(__dirname + "/../config/config.json")[env];
@@ -42,11 +43,10 @@ Object.keys(db).forEach((modelName) => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
-db.products = require("./product.js")(sequelize, Sequelize.DataTypes);
-db.purchases = require("./purchase.js")(sequelize, Sequelize.DataTypes);
-db.products.hasMany(db.purchases, { foreignKey: "purchaseId" });
-db.purchases.belongsTo(db.products, {
-  foreignKey: "productId",
-});
+// db.purchases = require("./purchase.js")(sequelize, Sequelize.DataTypes);
+// db.products = require("./product.js")(sequelize, Sequelize.DataTypes);
+
+// db.products.belongsTo(db.purchases);
+// db.purchases.hasOne(db.products);
 db.sequelize.sync({ force: false });
 module.exports = db;

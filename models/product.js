@@ -1,4 +1,4 @@
-const purchase = require("./purchase");
+const Purchase = require("./purchase");
 
 module.exports = (sequelize, Sequelize) => {
   const Product = sequelize.define("product", {
@@ -13,5 +13,8 @@ module.exports = (sequelize, Sequelize) => {
     },
   });
 
+  Product.associate = function (models) {
+    Product.hasOne(models.Purchase);
+  };
   return Product;
 };

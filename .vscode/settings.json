@@ -9,9 +9,9 @@
       "port": 3306,
       "driver": "MySQL",
       "name": "seqeualize",
-      "database": "default",
+      "database": "SequelizeNode",
       "username": "root",
-      "password": ""
+      "password": "robel123"
     }
   ]
 }

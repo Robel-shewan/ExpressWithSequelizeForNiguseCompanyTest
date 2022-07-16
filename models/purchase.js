@@ -1,14 +1,16 @@
-const Product = require("./product");
-
 module.exports = (sequelize, Sequelize) => {
-  const Purchase = sequelize.define("purchases", {
-    purchased_quantity: {
+  const Purchase = sequelize.define("Purchase", {
+    quantity: {
       type: Sequelize.INTEGER,
     },
-    purchased_price_per_piece: {
+    price: {
       type: Sequelize.INTEGER,
     },
   });
+
+  Purchase.associate = function (models) {
+    Purchase.belongsTo(models.product);
+  };
 
   return Purchase;
 };
