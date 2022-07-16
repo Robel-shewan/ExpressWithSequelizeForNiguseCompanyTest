@@ -1,12 +1,10 @@
 const asyncHandler = require("express-async-handler");
-const db = require("../models");
-const Product = db.product;
+const Product = require("../models").product;
 
 const { validationResult } = require("express-validator");
 const purchase = require("../models/purchase");
 
 // create the products
-
 const addProduct = asyncHandler(async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -14,7 +12,7 @@ const addProduct = asyncHandler(async (req, res, next) => {
   }
 
   let info = {
-    title: req.body.title,
+    name: req.body.name,
     description: req.body.description,
     quantity_on_stock: req.body.quantity_on_stock,
   };
@@ -23,6 +21,7 @@ const addProduct = asyncHandler(async (req, res, next) => {
   res.status(200).send(product);
 });
 
+// Get Product
 const getProduct = asyncHandler(async (req, res, next) => {
   const productId = req.params.id;
   const product = await Product.findOne({ where: { id: productId } });
@@ -31,8 +30,8 @@ const getProduct = asyncHandler(async (req, res, next) => {
 });
 
 const getAllProducts = asyncHandler(async (req, res, next) => {
-  const pageSize = req.body.startPostion;
-  const page = Number(req.body.maxResult) || 1;
+  // const pageSize = req.body.startPostion;
+  // const page = Number(req.body.maxResult) || 1;
 
   // For the Date1 is it present
   // if(req.body.data1!==undefined && req.body.data2==undefined){
@@ -44,20 +43,18 @@ const getAllProducts = asyncHandler(async (req, res, next) => {
 
   //   }
 
-  const products = await Product.findAll({
-    includes: [{ model: purchase }],
-    offset: (page - 1) * pageSize,
-    limit: 30,
-  });
+  const products = await Product.findAll({});
 
-  res.status(200).json({ products, page });
+  res.status(200).json({ products });
 });
+
 const deleteProduct = asyncHandler(async (req, res, next) => {
   const productId = req.params.id;
   const product = await Product.destroy({ where: { id: productId } });
   if (product == 0) return res.status(404).send("Not found the Product");
   res.status(200).json(product);
 });
+
 module.exports = {
   addProduct,
   getAllProducts,
